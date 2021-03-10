@@ -1,7 +1,7 @@
 Damascus Blue 2.0 Chores:
 ______________________________________________________________
 
-Create temporary environ scene. Primitive obstacles, basic textures, and stationary target practice.
+[[[temp environ; Primitives; Textures; Target practice]]]==========COMPLETE!
 
 [[[Player Motor]]]=========COMPLETE!
 

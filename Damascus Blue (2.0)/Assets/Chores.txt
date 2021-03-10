@@ -3,7 +3,7 @@ ______________________________________________________________
 
 Create temporary environ scene. Primitive obstacles, basic textures, and stationary target practice.
 
-Steal motor rig from Reality Beyond a Dream project.
+[[[Player Motor]]]=========COMPLETE!
 
 Steal gun and gun script from DB 1.0, and clean that code!
 

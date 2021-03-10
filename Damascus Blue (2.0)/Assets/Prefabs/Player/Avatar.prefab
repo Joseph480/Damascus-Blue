@@ -220,7 +220,7 @@ MonoBehaviour:
   Pause: 9
   MoveSpeed: 2.5
   LookSpeed: 3
-  JumpPower: 4
+  JumpPower: 5.5
   SprintAdditive: 2
   Drift: 7
   Drag: 2.5

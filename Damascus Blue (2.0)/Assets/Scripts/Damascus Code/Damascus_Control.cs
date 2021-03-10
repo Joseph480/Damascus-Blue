@@ -15,8 +15,7 @@ public class Damascus_Control : MonoBehaviour
     private float SpreadDefault;
     private Transform Origin;
     private Rigidbody ParentBody;
-    //private player_animation PA;
-    //private Player_audio AD;
+    private Animator PA;
 
     void Awake(){
         Shot = false;
@@ -33,6 +32,7 @@ public class Damascus_Control : MonoBehaviour
         Cooling = false;
         Origin = GameObject.Find("Origin").transform;
         ParentBody = GameObject.Find("Avatar").GetComponent<Rigidbody>();
+        PA = transform.GetComponent<Animator>();
     }
     void Update(){
         ReadMouse();
@@ -44,11 +44,13 @@ public class Damascus_Control : MonoBehaviour
         if (Input.GetKeyDown(Fire) && !Cooling)Shot = true;
         if (Input.GetKeyDown(Clutch)){
             Clutching = true;
+            PA.SetInteger("Clutch",1);
             Spread = SpreadDefault;
         }
         else if (Input.GetKeyUp(Clutch)){
             Clutching = false;
-            Spread = Spread * 3;
+            PA.SetInteger("Clutch",0);
+            Spread = Spread * 2;
         }
     }
     void FireGun(){
@@ -61,20 +63,16 @@ public class Damascus_Control : MonoBehaviour
             M.transform.GetComponent<Rigidbody>().velocity = M.transform.forward * ShotForce;
         }
         Kickback();
-        //PA.SetFire(1);
-        //PA.SetFlag(1);
-        //Invoke ("Settle", 0.1f);
+        PA.SetTrigger("Fire");
+        PA.SetInteger("Flag",1);
         Invoke ("Reload", CoolDown);
     }
     void Kickback(){
         if (Clutching)
             ParentBody.velocity = Origin.transform.forward * -Kick;
     }
-    void Settle(){
-        //PA.SetFire(0);
-    }
     void Reload(){
-        //PA.SetFlag(0);
+        PA.SetInteger("Flag",0);
         Cooling = false;
     }
 }

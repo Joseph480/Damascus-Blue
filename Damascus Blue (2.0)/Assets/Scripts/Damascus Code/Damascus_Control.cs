@@ -19,6 +19,7 @@ public class Damascus_Control : MonoBehaviour
     //private Player_audio AD;
 
     void Awake(){
+        Shot = false;
         PreLoad();
     }
     void PreLoad(){
@@ -32,7 +33,6 @@ public class Damascus_Control : MonoBehaviour
         Cooling = false;
         Origin = GameObject.Find("Origin").transform;
         ParentBody = GameObject.Find("Avatar").GetComponent<Rigidbody>();
-        //PA = FindObjectOfType<player_animation>().GetComponent<player_animation>();
     }
     void Update(){
         ReadMouse();
@@ -44,13 +44,11 @@ public class Damascus_Control : MonoBehaviour
         if (Input.GetKeyDown(Fire) && !Cooling)Shot = true;
         if (Input.GetKeyDown(Clutch)){
             Clutching = true;
-            //PA.SetClutch(1);
-            Spread = Spread * 3;
+            Spread = SpreadDefault;
         }
         else if (Input.GetKeyUp(Clutch)){
             Clutching = false;
-            //PA.SetClutch(0);
-            Spread = SpreadDefault;
+            Spread = Spread * 3;
         }
     }
     void FireGun(){
@@ -65,8 +63,8 @@ public class Damascus_Control : MonoBehaviour
         Kickback();
         //PA.SetFire(1);
         //PA.SetFlag(1);
-        //Invoke ("settle", 0.1f);
-        //Invoke ("reload", CoolDown);
+        //Invoke ("Settle", 0.1f);
+        Invoke ("Reload", CoolDown);
     }
     void Kickback(){
         if (Clutching)

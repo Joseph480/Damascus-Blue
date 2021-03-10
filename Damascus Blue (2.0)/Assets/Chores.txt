@@ -5,7 +5,7 @@ ______________________________________________________________
 
 [[[Player Motor]]]=========COMPLETE!
 
-Steal gun and gun script from DB 1.0, and clean that code!
+[[[Steal Gun]]]============COMPLETE! //Add Animations, Fix bullets, Fix flying glitch.
 
 Create hud text, (easy), create player stats: hp, energy, ferocity*
 

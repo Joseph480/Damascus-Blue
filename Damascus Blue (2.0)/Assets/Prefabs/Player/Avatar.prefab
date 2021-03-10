@@ -24,8 +24,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1877807561}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.4615385, z: -0.25}
-  m_LocalScale: {x: 1, y: 0.76923084, z: 1}
+  m_LocalPosition: {x: 0, y: -0.327, z: 2.03}
+  m_LocalScale: {x: 1, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 2134356950349087647}
   m_RootOrder: 2
@@ -116,6 +116,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6d7f9af167cfed429e7827ad55569d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Fire: 323
+  Clutch: 324
+  Munition: {fileID: 1553636443616537024, guid: be97b9425b2ed3b42b6dc7c2e7be7785,
+    type: 3}
+  CoolDown: 1
+  ShotForce: 16
+  Spread: 2.5
+  Kick: 6
+  ClusterSize: 7
 --- !u!1 &2134356950349087642
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,7 +191,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 439
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

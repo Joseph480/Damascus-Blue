@@ -107,6 +107,6 @@ public class Player_Control : MonoBehaviour
             Cursor.visible = false;
             Time.timeScale = 1;
         }
-        Debug.Log(Paused);
+        //Debug.Log(Paused);
     }
 }

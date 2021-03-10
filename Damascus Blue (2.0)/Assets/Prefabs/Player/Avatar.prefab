@@ -216,7 +216,7 @@ MonoBehaviour:
   Left: 97
   Right: 100
   Sprint: 304
-  Jump: 0
+  Jump: 32
   Pause: 9
   MoveSpeed: 2.5
   LookSpeed: 3
@@ -288,6 +288,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2134356952160204690}
   - component: {fileID: 2134356952160204689}
+  - component: {fileID: 1411953917}
   m_Layer: 0
   m_Name: Soles
   m_TagString: Untagged
@@ -323,3 +324,15 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1411953917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2134356952160204691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8346676b73d0244db3fd0d1cbedf1b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

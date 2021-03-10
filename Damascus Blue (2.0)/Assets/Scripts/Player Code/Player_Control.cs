@@ -27,8 +27,8 @@ public class Player_Control : MonoBehaviour
         CamRelative();
     }
     void Update(){
-       if(Paused)return;
         ReadController();
+        if(Paused)return;
         MoveDir();
         CheckMoving();
     }
@@ -40,16 +40,16 @@ public class Player_Control : MonoBehaviour
         if(Paused)return;
         ApplyForce();
         Sprinting();
-        //Jumping();
+        Jumping();
     }
     void ReadController(){
-        if (Input.GetKeyDown(Pause))PausePlayer(!Paused);
+        if(Input.GetKeyDown(Pause))PausePlayer(!Paused);
         if(Input.GetKey(Forward))Mf=true;else Mf=false;
         if(Input.GetKey(Back))Mb=true;else Mb=false;
         if(Input.GetKey(Left))Ml=true;else Ml=false;
         if(Input.GetKey(Right))Mr=true;else Mr=false;
         if(Input.GetKey(Sprint))Sp=true;else Sp=false;
-        //if(Input.GetKeyDown(Jump) && Feet_Controller.jumps > 0) Jmp=true;
+        if(Input.GetKeyDown(Jump) && Landing_Control.Jumps > 0) Jmp=true;
     }
     void CheckMoving(){
         if (Ml||Mr||Mf||Mb)Moving=true;else Moving=false;
@@ -80,17 +80,17 @@ public class Player_Control : MonoBehaviour
         transform.rotation = Quaternion.Euler(0,Yaw,0);
         Cam.transform.rotation = Quaternion.Euler(Pitch,transform.rotation.eulerAngles.y,0);
     }
-    /*void Jumping(){
+    void Jumping(){
         if (Jmp){
             Vector3 vector;
             vector.x = Rb.velocity.x; 
             vector.y = JumpPower; 
             vector.z = Rb.velocity.z;
-            Feet_Controller.jumps--;
+            Landing_Control.Jumps--;
             Rb.velocity = vector;
             Jmp=false;
         }
-    }*/
+    }
     void Sprinting(){
         if (Sp) MoveSpeed = Mathf.Lerp(MoveSpeed,BaseSpeed + SprintAdditive,MoveSpeed);
         else MoveSpeed = BaseSpeed;
@@ -107,5 +107,6 @@ public class Player_Control : MonoBehaviour
             Cursor.visible = false;
             Time.timeScale = 1;
         }
+        Debug.Log(Paused);
     }
 }

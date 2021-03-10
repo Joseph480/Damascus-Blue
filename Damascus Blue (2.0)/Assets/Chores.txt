@@ -1,0 +1,50 @@
+Damascus Blue 2.0 Chores:
+______________________________________________________________
+
+Create temporary environ scene. Primitive obstacles, basic textures, and stationary target practice.
+
+Steal motor rig from Reality Beyond a Dream project.
+
+Steal gun and gun script from DB 1.0, and clean that code!
+
+Create hud text, (easy), create player stats: hp, energy, ferocity*
+
+	*Ferocity: no ammo in game, but missing shots decrease damage.
+	Good accuracy will build ferocity, and thus accumulating damage.
+	Ferocity pick ups will be lying around.
+
+Items: medkits, ferocity spheres.
+
+Enteractions: Open door. Break containers. Action pads*
+
+	*Action Pads: a big button that when stood upon, activates some
+	sort of animation.
+
+
+|=========================END OF BETA========================| Due the 20th.
+
+Block out level.
+
+Build better textures.
+
+Add sounds and audio.
+
+Add lighting.
+
+Build A.I navmesh system, and give A.I actions.
+
+Reblock as necessary.
+
+|========================END OF BLOCKING=====================| Due the 30th.
+
+Highly detailed environ.
+
+Everything is textured.
+
+Tune audio and lighting.
+
+Clean A.I.
+
+End Level stat.
+
+|=========================END OF ALPHA=======================| Due before class ends!

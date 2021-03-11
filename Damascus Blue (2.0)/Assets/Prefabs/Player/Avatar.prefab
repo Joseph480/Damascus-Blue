@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 915204792}
   m_Layer: 10
   m_Name: Avatar
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -374,6 +374,7 @@ MonoBehaviour:
   Energy: 0
   Ferocity: 0
   FDrain: 100
+  HurtRate: 0.75
 --- !u!1 &2134356952022442200
 GameObject:
   m_ObjectHideFlags: 0

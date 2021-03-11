@@ -166,7 +166,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 0}
+  m_BackGroundColor: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -187,7 +187,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 439
+    m_Bits: 2487
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -383,7 +383,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2134356952022442207}
   - component: {fileID: 2134356952022442206}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Feet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -429,7 +429,7 @@ GameObject:
   - component: {fileID: 2134356952160204690}
   - component: {fileID: 2134356952160204689}
   - component: {fileID: 1411953917}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Soles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -506,12 +506,12 @@ PrefabInstance:
     - target: {fileID: 919132147817410531, guid: b2c9200b334e69548986f838f17ed8a5,
         type: 3}
       propertyPath: Spread
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 919132147817410531, guid: b2c9200b334e69548986f838f17ed8a5,
         type: 3}
       propertyPath: ShotForce
-      value: 25
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 919132147817410531, guid: b2c9200b334e69548986f838f17ed8a5,
         type: 3}

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4551800537461922928}
   - component: {fileID: 472400401949676337}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Point Light
   m_TagString: FSphere
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 5510012578124042538}
   - component: {fileID: 5727094691495906443}
   - component: {fileID: 4493057539980183335}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Icosphere
   m_TagString: FSphere
   m_Icon: {fileID: 0}
@@ -2355,7 +2355,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1203091667133789038}
   - component: {fileID: 1749780026}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FSphere
   m_TagString: FSphere
   m_Icon: {fileID: 0}

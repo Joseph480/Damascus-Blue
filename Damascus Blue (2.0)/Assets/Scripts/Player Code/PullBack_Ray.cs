@@ -21,6 +21,7 @@ public class PullBack_Ray : MonoBehaviour
     }
     void Update(){
         CastRay();
+        if (Player.Paused) return;
         PositionGun();
     }
     void CastRay(){

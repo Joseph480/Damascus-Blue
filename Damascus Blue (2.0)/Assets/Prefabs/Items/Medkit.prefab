@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 467821444070901566}
   - component: {fileID: 6736224509425945705}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 7752866675344573140}
   - component: {fileID: 4326056140282964388}
   - component: {fileID: 2189258409249907305}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Model
   m_TagString: MedKit
   m_Icon: {fileID: 0}
@@ -895,7 +895,7 @@ GameObject:
   m_Component:
   - component: {fileID: 302843545848547492}
   - component: {fileID: 442695959464012996}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Medkit
   m_TagString: MedKit
   m_Icon: {fileID: 0}

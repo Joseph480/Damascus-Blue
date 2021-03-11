@@ -33,7 +33,8 @@ public class Player_Stats : MonoBehaviour
         }
     }
     private IEnumerator Hurt(){
-        if (Hurting){Health--; Health = Mathf.Clamp(Health,0,100);}
+        if (Hurting){Health--; Ferocity--; 
+        Health = Mathf.Clamp(Health,0,100);Ferocity = Mathf.Clamp(Ferocity, 0, 200);}
         else StopCoroutine(Coroutine2);
         yield return new WaitForSeconds(HurtRate);
         Coroutine2 = Hurt(); StartCoroutine(Coroutine2);

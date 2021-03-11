@@ -13,19 +13,19 @@ Started: 3/10/2021
 
 [[[Items]]]================COMPLETE!
 
-[[[Containers. Action pads.
+[[[Containers. Action pads]]===========COMPLETE!
 
-Finished: ?/?/2021
+Finished: 3/11/2021
 
 |=========================END OF BETA========================| Due the 20th.
 
-Block out level.
+Started: 3/11/2021
 
-Build better textures.
+Block out level.
 
 Add sounds and audio.
 
-Add lighting.
+Add basic lighting.
 
 Build A.I navmesh system, and give A.I actions.
 

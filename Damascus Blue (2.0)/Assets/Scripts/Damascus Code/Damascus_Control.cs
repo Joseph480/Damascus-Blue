@@ -50,7 +50,7 @@ public class Damascus_Control : MonoBehaviour
        FieldFocus();
     }
     void ReadMouse(){
-        if (Input.GetKeyDown(Fire) && !Cooling)Shot = true;
+        if (Input.GetKey(Fire) && !Cooling)Shot = true;
         if (Input.GetKeyDown(Clutch)){
             Clutching = true;
             PA.SetInteger("Clutch",1);
@@ -63,7 +63,7 @@ public class Damascus_Control : MonoBehaviour
         }
     }
     void FieldFocus(){
-        if (Clutching){ Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, 65, 0.2f);
+        if (Clutching){Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, 65, 0.2f);
         Cam2.fieldOfView = Mathf.Lerp(Cam.fieldOfView, 65, 0.2f);}
 
         if (!Clutching){Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, 75, 0.2f);

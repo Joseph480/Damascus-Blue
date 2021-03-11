@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5452204328794759893}
   - component: {fileID: 5452204328794759894}
   - component: {fileID: 7279501655584615522}
+  - component: {fileID: 9126061451794440632}
   m_Layer: 11
   m_Name: Button
   m_TagString: Action
@@ -1128,6 +1129,25 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.8
   m_Center: {x: -0.7, y: 0.3, z: 0}
+--- !u!114 &9126061451794440632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5452204328794759889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 217a7767405c10f42828ce7b5bbba53f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 0}
+  Movement: 1
+  Activation: 0
+  Destruction: 0
+  Direction: {x: 0, y: 1, z: 0}
+  Distance: 3.5
+  MoveSpeed: 0.01
 --- !u!1 &5452204328825432849
 GameObject:
   m_ObjectHideFlags: 0

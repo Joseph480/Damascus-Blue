@@ -6,17 +6,25 @@ using UnityEngine.UI;
 public class Hud_Control : MonoBehaviour
 {
     public Image HealthBar;
+    public Text FCounter;
 
     private Player_Stats PlayerStats;
+    private Player_Control Player;
 
     void Start(){
         PlayerStats = FindObjectOfType<Player_Stats>();
+        Player = PlayerStats.GetComponent<Player_Control>();
     }
     void FixedUpdate(){
+        if (Player.Paused) return;
         UpdateHealthBar();
+        UpdateFCounter();
     }
 
     void UpdateHealthBar(){
-        HealthBar.rectTransform.localScale = new Vector3(.01f*(float)PlayerStats.Health,1,1);
+        HealthBar.fillAmount = 0.01f*(float)PlayerStats.Health;
+    }
+    void UpdateFCounter(){
+        FCounter.text = Player_Stats.Ferocity.ToString();
     }
 }

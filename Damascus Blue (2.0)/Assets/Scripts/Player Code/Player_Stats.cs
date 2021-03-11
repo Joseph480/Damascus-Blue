@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Player_Stats : MonoBehaviour
 {
-    public int Health, Energy, Ferocity, FDrain; 
-    public float HurtRate;
+    public int Health;
+    public static int Ferocity; 
+    public float FDrain, HurtRate;
 
     private IEnumerator Coroutine, Coroutine2;
     private bool Hurting;
@@ -14,14 +15,12 @@ public class Player_Stats : MonoBehaviour
         Coroutine = DrainFerocity();
         Coroutine2 = Hurt();
         Health = 100;
-        Energy = 100;
-        Ferocity = 200;
+        Ferocity = 25;
         StartCoroutine(Coroutine);
     }
-
     void OnTriggerEnter(Collider other){
         switch(other.tag){
-            case "Medkit": Health += 10; Health = Mathf.Clamp(Health,0,100); break;
+            case "MedKit": Health += 10; Health = Mathf.Clamp(Health,0,100); Destroy(other.transform.parent.gameObject); break;
             case "FSphere": Ferocity += 5; break;
             case "Hazzard": Hurting = true; Coroutine2 = Hurt(); StartCoroutine(Coroutine2); break;
             default: break;
@@ -40,10 +39,9 @@ public class Player_Stats : MonoBehaviour
         Coroutine2 = Hurt(); StartCoroutine(Coroutine2);
     }
     private IEnumerator DrainFerocity(){
-        yield return new WaitForSeconds(FDrain/(Ferocity/2));
+        yield return new WaitForSeconds(FDrain - FDrain/Ferocity);
         Ferocity--;
-        Ferocity = Mathf.Clamp(Ferocity, 0, 999);
-        Debug.Log(Ferocity);
+        Ferocity = Mathf.Clamp(Ferocity, 0, 200);
         Coroutine = DrainFerocity(); StartCoroutine(Coroutine);
     }
 }

@@ -9,7 +9,7 @@ ______________________________________________________________
 
 Create hud text, (easy).
 
-Items: medkits, ferocity spheres.
+Items: medkits, ferocity spheres, Hazzards.
 
 Enteractions: Open door. Break containers. Action pads*
 

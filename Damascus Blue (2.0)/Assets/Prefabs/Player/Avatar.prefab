@@ -371,10 +371,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 0
-  Energy: 0
-  Ferocity: 0
-  FDrain: 100
-  HurtRate: 0.75
+  Ferocity: 25
+  FDrain: 1
+  HurtRate: 0.02
 --- !u!1 &2134356952022442200
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,10 +13,7 @@ Started: 3/10/2021
 
 [[[Items]]]================COMPLETE!
 
-Enteractions: Open door. Break containers. Action pads*
-
-	*Action Pads: a big button that when stood upon, activates some
-	sort of animation.
+[[[Containers. Action pads.
 
 Finished: ?/?/2021
 

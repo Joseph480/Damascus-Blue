@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Projectile
   - FSphere
+  - Action
   layers:
   - Default
   - TransparentFX

@@ -85,7 +85,7 @@ public class Damascus_Control : MonoBehaviour
     }
     void Kickback(){
         if (Clutching)
-            ParentBody.velocity = Origin.transform.forward * -Kick;
+            ParentBody.velocity = transform.forward * -Kick;
     }
     void Reload(){
         PA.SetInteger("Flag",0);

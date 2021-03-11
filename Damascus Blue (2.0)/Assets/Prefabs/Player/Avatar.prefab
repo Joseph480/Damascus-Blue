@@ -383,7 +383,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2134356952022442207}
   - component: {fileID: 2134356952022442206}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Feet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -429,7 +429,7 @@ GameObject:
   - component: {fileID: 2134356952160204690}
   - component: {fileID: 2134356952160204689}
   - component: {fileID: 1411953917}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Soles
   m_TagString: Untagged
   m_Icon: {fileID: 0}

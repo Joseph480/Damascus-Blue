@@ -10,7 +10,7 @@ public class Player_Control : MonoBehaviour
     public Camera Cam;
 
     private Vector3 CamF,CamR,Mover,Slider;
-    private Vector2 MinMax = new Vector2 (-90f, 90f);
+    private Vector2 MinMax = new Vector2 (-89f, 89f);
     private float Yaw, Pitch, BaseSpeed;
     [HideInInspector]
     public bool Mf,Mb,Ml,Mr,Sp,Jmp;

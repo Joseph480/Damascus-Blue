@@ -16,6 +16,8 @@ public class Damascus_Control : MonoBehaviour
     private Transform Origin;
     private Rigidbody ParentBody;
     private Animator PA;
+    private Camera Cam;
+    private Player_Control Player;
 
     void Awake(){
         Shot = false;
@@ -33,12 +35,16 @@ public class Damascus_Control : MonoBehaviour
         Origin = GameObject.Find("Origin").transform;
         ParentBody = GameObject.Find("Avatar").GetComponent<Rigidbody>();
         PA = transform.GetComponent<Animator>();
+        Cam = Camera.main;
+        Player = ParentBody.GetComponent<Player_Control>();
     }
     void Update(){
+        if (Player.Paused) return;
         ReadMouse();
     }
     void FixedUpdate(){
        if(Shot)FireGun();
+       FieldFocus();
     }
     void ReadMouse(){
         if (Input.GetKeyDown(Fire) && !Cooling)Shot = true;
@@ -52,6 +58,10 @@ public class Damascus_Control : MonoBehaviour
             PA.SetInteger("Clutch",0);
             Spread = Spread * 2;
         }
+    }
+    void FieldFocus(){
+        if (Clutching) Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, 65, 0.2f);
+        if (!Clutching) Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, 75, 0.2f);
     }
     void FireGun(){
         Shot = false;

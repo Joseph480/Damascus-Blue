@@ -419,10 +419,35 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2134356950349087647}
     m_Modifications:
+    - target: {fileID: 1877807562, guid: b2c9200b334e69548986f838f17ed8a5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1877807562, guid: b2c9200b334e69548986f838f17ed8a5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1877807562, guid: b2c9200b334e69548986f838f17ed8a5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1877807562, guid: b2c9200b334e69548986f838f17ed8a5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1877807562, guid: b2c9200b334e69548986f838f17ed8a5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132147817410531, guid: b2c9200b334e69548986f838f17ed8a5,
         type: 3}
       propertyPath: Spread
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132147817410531, guid: b2c9200b334e69548986f838f17ed8a5,
+        type: 3}
+      propertyPath: ShotForce
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 919132147817410531, guid: b2c9200b334e69548986f838f17ed8a5,
         type: 3}

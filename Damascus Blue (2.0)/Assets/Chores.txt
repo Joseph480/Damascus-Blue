@@ -5,7 +5,7 @@ ______________________________________________________________
 
 [[[Player Motor]]]=========COMPLETE!
 
-[[[Steal Gun]]]============COMPLETE! //Add Animations, Fix bullets, Fix flying glitch.
+[[[Steal Gun]]]============COMPLETE!
 
 Create hud text, (easy), create player stats: hp, energy, ferocity*
 

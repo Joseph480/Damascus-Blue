@@ -11,7 +11,8 @@ public class Damascus_Control : MonoBehaviour
 
     List<Quaternion> Scatter;
 
-    private bool Cooling, Shot, Clutching;
+    [HideInInspector]
+    public bool Cooling, Shot, Clutching;
     private float SpreadDefault;
     private Transform Origin;
     private Rigidbody ParentBody;

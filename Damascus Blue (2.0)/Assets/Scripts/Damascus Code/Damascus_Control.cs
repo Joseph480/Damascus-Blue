@@ -41,6 +41,7 @@ public class Damascus_Control : MonoBehaviour
         Player = ParentBody.GetComponent<Player_Control>();
     }
     void Update(){
+        ToteGun();
         if (Player.Paused) return;
         ReadMouse();
     }
@@ -89,5 +90,9 @@ public class Damascus_Control : MonoBehaviour
     void Reload(){
         PA.SetInteger("Flag",0);
         Cooling = false;
+    }
+    void ToteGun(){
+        if (Player.Moving && Landing_Control.Grounded)PA.SetInteger("Tote",1);
+        else PA.SetInteger("Tote",0);
     }
 }

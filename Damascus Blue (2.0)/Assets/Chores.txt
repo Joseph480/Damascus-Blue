@@ -5,13 +5,9 @@ ______________________________________________________________
 
 [[[Player Motor]]]=========COMPLETE!
 
-[[[Steal Gun]]]============COMPLETE!
+[[[Steel Gun]]]============COMPLETE!
 
-Create hud text, (easy), create player stats: hp, energy, ferocity*
-
-	*Ferocity: no ammo in game, but missing shots decrease damage.
-	Good accuracy will build ferocity, and thus accumulating damage.
-	Ferocity pick ups will be lying around.
+Create hud text, (easy).
 
 Items: medkits, ferocity spheres.
 
@@ -19,7 +15,6 @@ Enteractions: Open door. Break containers. Action pads*
 
 	*Action Pads: a big button that when stood upon, activates some
 	sort of animation.
-
 
 |=========================END OF BETA========================| Due the 20th.
 

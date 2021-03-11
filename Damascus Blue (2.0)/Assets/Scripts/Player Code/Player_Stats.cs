@@ -12,7 +12,7 @@ public class Player_Stats : MonoBehaviour
         Coroutine = DrainFerocity();
         Health = 100;
         Energy = 100;
-        Ferocity = 50;
+        Ferocity = 200;
         StartCoroutine(Coroutine);
     }
 
@@ -28,7 +28,7 @@ public class Player_Stats : MonoBehaviour
         yield return new WaitForSeconds(FDrain/(Ferocity/2));
         Ferocity--;
         Ferocity = Mathf.Clamp(Ferocity, 0, 999);
-        //Debug.Log(Ferocity);
+        Debug.Log(Ferocity);
         Coroutine = DrainFerocity(); StartCoroutine(Coroutine);
     }
 }

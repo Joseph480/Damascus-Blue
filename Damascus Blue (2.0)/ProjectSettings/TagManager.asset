@@ -8,6 +8,7 @@ TagManager:
   - MedKit
   - Enemy
   - Projectile
+  - FSphere
   layers:
   - Default
   - TransparentFX

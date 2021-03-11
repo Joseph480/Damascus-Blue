@@ -21,7 +21,7 @@ public class Player_Stats : MonoBehaviour
     void OnTriggerEnter(Collider other){
         switch(other.tag){
             case "MedKit": Health += 10; Health = Mathf.Clamp(Health,0,100); Destroy(other.transform.parent.gameObject); break;
-            case "FSphere": Ferocity += 5; break;
+            case "FSphere": Ferocity += 25; Ferocity = Mathf.Clamp(Ferocity,0,200);Destroy(other.transform.parent.gameObject); break;
             case "Hazzard": Hurting = true; Coroutine2 = Hurt(); StartCoroutine(Coroutine2); break;
             default: break;
         }

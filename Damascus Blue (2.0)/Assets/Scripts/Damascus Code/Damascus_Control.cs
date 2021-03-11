@@ -16,7 +16,7 @@ public class Damascus_Control : MonoBehaviour
     private Transform Origin;
     private Rigidbody ParentBody;
     private Animator PA;
-    private Camera Cam;
+    private Camera Cam, Cam2;
     private Player_Control Player;
 
     void Awake(){
@@ -36,6 +36,7 @@ public class Damascus_Control : MonoBehaviour
         ParentBody = GameObject.Find("Avatar").GetComponent<Rigidbody>();
         PA = transform.GetComponent<Animator>();
         Cam = Camera.main;
+        Cam2 = GameObject.Find("GunCam").GetComponent<Camera>();
         Player = ParentBody.GetComponent<Player_Control>();
     }
     void Update(){
@@ -60,8 +61,11 @@ public class Damascus_Control : MonoBehaviour
         }
     }
     void FieldFocus(){
-        if (Clutching) Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, 65, 0.2f);
-        if (!Clutching) Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, 75, 0.2f);
+        if (Clutching){ Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, 65, 0.2f);
+        Cam2.fieldOfView = Mathf.Lerp(Cam.fieldOfView, 65, 0.2f);}
+
+        if (!Clutching){Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, 75, 0.2f);
+        Cam2.fieldOfView = Mathf.Lerp(Cam.fieldOfView, 65, 0.2f);}
     }
     void FireGun(){
         Shot = false;

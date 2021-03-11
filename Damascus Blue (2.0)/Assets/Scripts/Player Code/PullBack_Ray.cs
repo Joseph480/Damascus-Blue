@@ -30,7 +30,7 @@ public class PullBack_Ray : MonoBehaviour
         
     }
     void PositionGun(){
-        if (Hitting)Holster.transform.localPosition = Vector3.Lerp(Holster.transform.localPosition, Offset, 0.02f);
-        else Holster.transform.localPosition = Vector3.Lerp (Holster.transform.localPosition, Origin, 0.02f);
+        if (Hitting)Holster.transform.localPosition = Vector3.Lerp(Holster.transform.localPosition, Offset, 0.01f);
+        else Holster.transform.localPosition = Vector3.Lerp (Holster.transform.localPosition, Origin, 0.01f);
     }
 }

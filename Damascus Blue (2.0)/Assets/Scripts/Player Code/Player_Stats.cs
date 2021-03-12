@@ -21,7 +21,7 @@ public class Player_Stats : MonoBehaviour
     void OnTriggerEnter(Collider other){
         switch(other.tag){
             case "MedKit": Health += 10; Health = Mathf.Clamp(Health,0,100); Destroy(other.transform.parent.gameObject); break;
-            case "FSphere": Ferocity += 25; Ferocity = Mathf.Clamp(Ferocity,0,200);Destroy(other.transform.parent.gameObject); break;
+            case "FSphere": Ferocity += 25; Ferocity = Mathf.Clamp(Ferocity,1,200);Destroy(other.transform.parent.gameObject); break;
             case "Hazzard": Hurting = true; Coroutine2 = Hurt(); StartCoroutine(Coroutine2); break;
             default: break;
         }
@@ -34,7 +34,7 @@ public class Player_Stats : MonoBehaviour
     }
     private IEnumerator Hurt(){
         if (Hurting){Health--; Ferocity--; 
-        Health = Mathf.Clamp(Health,0,100);Ferocity = Mathf.Clamp(Ferocity, 0, 200);}
+        Health = Mathf.Clamp(Health,0,100);Ferocity = Mathf.Clamp(Ferocity, 1, 200);}
         else StopCoroutine(Coroutine2);
         yield return new WaitForSeconds(HurtRate);
         Coroutine2 = Hurt(); StartCoroutine(Coroutine2);
@@ -42,7 +42,7 @@ public class Player_Stats : MonoBehaviour
     private IEnumerator DrainFerocity(){
         yield return new WaitForSeconds(FDrain - FDrain/Ferocity);
         Ferocity--;
-        Ferocity = Mathf.Clamp(Ferocity, 0, 200);
+        Ferocity = Mathf.Clamp(Ferocity, 1, 200);
         Coroutine = DrainFerocity(); StartCoroutine(Coroutine);
     }
 }

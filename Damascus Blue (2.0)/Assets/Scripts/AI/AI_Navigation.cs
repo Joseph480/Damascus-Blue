@@ -11,7 +11,7 @@ public class AI_Navigation : MonoBehaviour
     public Vector3[] Path;
 
     private Vector3 Origin, RayOriginOffset, RayAlertOffset, Target;
-    private Quaternion IdelDir, TargetDir;
+    private Quaternion IdelDir, CurrentDir, TargetDir;
     private Player_Control Player;
     private float PlayerDistance;
     private bool Sighting, EmptyRay, Idel;
@@ -36,6 +36,7 @@ public class AI_Navigation : MonoBehaviour
     void FixedUpdate(){
         if (HasPath){
             //FollowPath.
+            if (!Idel) Follow();
             //Never Walk idel so end with return.
             return;
         }
@@ -69,7 +70,6 @@ public class AI_Navigation : MonoBehaviour
     }
     void Follow(){
         RB.MovePosition(Vector3.MoveTowards(transform.position, Player.transform.position, MoveSpeed/50));
-        //transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, MoveSpeed/50);
         Target = new Vector3 (Player.transform.position.x, transform.position.y, Player.transform.position.z);
         TargetDir = Quaternion.LookRotation(Target - transform.position);
         transform.rotation = Quaternion.Slerp(transform.rotation, TargetDir, LookSpeedChase * Time.deltaTime);
@@ -79,7 +79,8 @@ public class AI_Navigation : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, IdelDir, LookSpeedIdel * Time.deltaTime);
     }
     IEnumerator NewDirection(){
-        IdelDir = Quaternion.Euler(0,Random.Range(-180,180),0);
+        CurrentDir = transform.rotation;
+        IdelDir = CurrentDir * Quaternion.Euler(0,Random.Range(-180,180),0);
         yield return new WaitForSeconds(IdelPathTime);
         IdelRoutine = NewDirection(); StartCoroutine(IdelRoutine);
     }

@@ -78,9 +78,17 @@ public class AI_Navigation : MonoBehaviour
         RB.MovePosition(Vector3.Lerp(transform.position, transform.position + transform.forward,(MoveSpeed/100)));
         transform.rotation = Quaternion.Slerp(transform.rotation, IdelDir, LookSpeedIdel * Time.deltaTime);
     }
+    int TurnBias() {
+        float rand = Random.value;
+        if (rand <= .5f)
+            return Random.Range(-90, 90);
+        if (rand <= .8f)
+            return Random.Range(-130, 130);
+        return Random.Range(-180, 180);
+    }
     IEnumerator NewDirection(){
         CurrentDir = transform.rotation;
-        IdelDir = CurrentDir * Quaternion.Euler(0,Random.Range(-180,180),0);
+        IdelDir = CurrentDir * Quaternion.Euler(0,TurnBias(),0);
         yield return new WaitForSeconds(IdelPathTime);
         IdelRoutine = NewDirection(); StartCoroutine(IdelRoutine);
     }

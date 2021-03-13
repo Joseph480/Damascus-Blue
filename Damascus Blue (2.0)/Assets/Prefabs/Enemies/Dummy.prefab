@@ -61,14 +61,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab02cd49391600b41baa06f3217de869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 0.5
+  MoveSpeed: 2
   LookSpeedChase: 30
   LookSpeedIdel: 15
   IdelPathTime: 2
   SightLength: 10
   Alertness: 45
   HasPath: 1
-  NavLength: 0
+  NavLength: 4
 --- !u!1 &2993993933631951230
 GameObject:
   m_ObjectHideFlags: 0

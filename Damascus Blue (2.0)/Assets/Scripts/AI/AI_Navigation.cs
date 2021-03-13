@@ -26,23 +26,23 @@ public class AI_Navigation : MonoBehaviour
     private Ray N, NE, E, SE, S, SW, W, NW;
     private RaycastHit HitN, HitNE, HitE, HitSE, HitS, HitSW, HitW, HitNW;
     private Vector3 PosN, PosNE, PosE, PosSE, PosS, PosSW, PosW, PosNW;
-    private Vector3 DiagonalOffset;
+    private Vector3 Mover;
 
     void Start(){
         Player = FindObjectOfType<Player_Control>();
         RB = GetComponent<Rigidbody>();
         Origin = transform.position;
         RayOriginOffset = new Vector3(0,0.5f,0);
-        DiagonalOffset = new Vector3(0,45,0);
         //Cycles below
         if (!HasPath)InvokeRepeating("NewDirection",IdelPathTime,IdelPathTime);
         InvokeRepeating("Lingering", IdelPathTime*IdelPathTime,IdelPathTime*IdelPathTime);
         InvokeRepeating("RandomDetect",(float)IdelPathTime/2,(float)IdelPathTime/2);
-        InvokeRepeating("Navigate",0.1f,0.1f);
+        InvokeRepeating("Navigate",0.2f,0.2f);
         Idel = true;
     }
     void Update(){
         Detect();
+        DrawNavLines();
     }
     void FixedUpdate(){
         if (HasPath){
@@ -78,51 +78,86 @@ public class AI_Navigation : MonoBehaviour
             EmptyRay = false;
         } else EmptyRay = true;
     }
+    void DrawNavLines(){
+        Debug.DrawRay(N.origin,N.direction * NavLength,Color.yellow);
+        Debug.DrawRay(NE.origin,NE.direction * NavLength,Color.blue);
+        Debug.DrawRay(E.origin,E.direction * NavLength,Color.red);
+        Debug.DrawRay(SE.origin,SE.direction * NavLength,Color.blue);
+        Debug.DrawRay(S.origin,S.direction * NavLength,Color.red);
+        Debug.DrawRay(SW.origin,SW.direction * NavLength,Color.blue);
+        Debug.DrawRay(W.origin,W.direction * NavLength,Color.red);
+        Debug.DrawRay(NW.origin,NW.direction * NavLength,Color.blue);
+    }
+    void OnDrawGizmos(){
+        Gizmos.DrawSphere(PosN, 0.2f);
+        Gizmos.DrawSphere(PosNE, 0.2f);
+        Gizmos.DrawSphere(PosE, 0.2f);
+        Gizmos.DrawSphere(PosSE, 0.2f);
+        Gizmos.DrawSphere(PosS, 0.2f);
+        Gizmos.DrawSphere(PosSW, 0.2f);
+        Gizmos.DrawSphere(PosW, 0.2f);
+        Gizmos.DrawSphere(PosNW, 0.2f);
+    }
     void Navigate(){
-        N.direction = transform.forward;
-        NE.direction = transform.forward + DiagonalOffset;
-        E.direction = transform.right;
-        SE.direction = transform.right + DiagonalOffset;
-        S.direction = -transform.forward;
-        SW.direction = -transform.forward + DiagonalOffset;
-        W.direction = -transform.right;
-        NW.direction = -transform.right + DiagonalOffset;
+        N.origin = transform.position;
+        NE.origin = transform.position;
+        E.origin = transform.position;
+        SE.origin = transform.position;
+        S.origin = transform.position;
+        SW.origin = transform.position;
+        W.origin = transform.position;
+        NW.origin = transform.position;
 
-        Debug.DrawRay(Origin,N.direction * NavLength,Color.red);
-        Debug.DrawRay(Origin,NE.direction * NavLength,Color.red);
-        Debug.DrawRay(Origin,E.direction * NavLength,Color.red);
-        Debug.DrawRay(Origin,SE.direction * NavLength,Color.red);
-        Debug.DrawRay(Origin,S.direction * NavLength,Color.red);
-        Debug.DrawRay(Origin,SW.direction * NavLength,Color.red);
-        Debug.DrawRay(Origin,W.direction * NavLength,Color.red);
-        Debug.DrawRay(Origin,NW.direction * NavLength,Color.red);
+        N.direction = transform.forward;
+        NE.direction = transform.forward + transform.right.normalized;
+        E.direction = transform.right;
+        SE.direction = transform.right + -transform.forward.normalized;
+        S.direction = -transform.forward;
+        SW.direction = -transform.forward + -transform.right.normalized;
+        W.direction = -transform.right;
+        NW.direction = -transform.right + transform.forward.normalized;
+
+        PosN = transform.position + N.direction * NavLength;
+        PosNE = transform.position + NE.direction * NavLength;
+        PosE = transform.position + E.direction * NavLength;
+        PosSE = transform.position + SE.direction * NavLength;
+        PosS = transform.position + S.direction * NavLength;
+        PosSW = transform.position + SW.direction * NavLength;
+        PosW = transform.position + W.direction * NavLength;
+        PosNW = transform.position + NW.direction * NavLength;
 
         /*
         if (Physics.Raycast(N, out HitN, NavLength)){    
             if(Hit.collider.tag != "Player" && Hit.collider.tag != "Enemy"){    }
         }
+
         if (Physics.Raycast(NE, out HitNE, NavLength)){    
             if(Hit.collider.tag != "Player" && Hit.collider.tag != "Enemy"){    }
         }
+
         if (Physics.Raycast(E, out HitE, NavLength)){    
             if(Hit.collider.tag != "Player" && Hit.collider.tag != "Enemy"){    }
         }
+
         if (Physics.Raycast(SE, out HitSE, NavLength)){    
             if(Hit.collider.tag != "Player" && Hit.collider.tag != "Enemy"){    }
         }
+
         if (Physics.Raycast(S, out HitS, NavLength)){    
             if(Hit.collider.tag != "Player" && Hit.collider.tag != "Enemy"){    }
         }
+
         if (Physics.Raycast(SW, out HitSW, NavLength)){    
             if(Hit.collider.tag != "Player" && Hit.collider.tag != "Enemy"){    }
         }
+
         if (Physics.Raycast(W, out HitW, NavLength)){    
             if(Hit.collider.tag != "Player" && Hit.collider.tag != "Enemy"){    }
         }
+
         if (Physics.Raycast(NW, out HitNW, NavLength)){    
             if(Hit.collider.tag != "Player" && Hit.collider.tag != "Enemy"){    }
-        }
-        */
+        }*/
     }
     void Follow(){
         //Change pos to cardinal points

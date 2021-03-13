@@ -13,8 +13,8 @@ public class Damage_Check : MonoBehaviour
     void OnTriggerEnter(Collider other){
         if (other.gameObject.tag == "Projectile"){
             if (GivesFerocity){Player_Stats.Ferocity++; 
-            Player_Stats.Ferocity = Mathf.Clamp(Player_Stats.Ferocity, 0, 200);}
-            if (Breaks) {Health = Health - (int)Player_Stats.Ferocity/4; if (Health <= 0) Destruct();}
+            Player_Stats.Ferocity = Mathf.Clamp(Player_Stats.Ferocity, 1, 200);}
+            if (Breaks) {Health = Health - Mathf.CeilToInt((float)Player_Stats.Ferocity/8f); if (Health <= 0) Destruct();}
         }
     }
     void Destruct(){

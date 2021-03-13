@@ -27,7 +27,7 @@ Add sounds and audio.
 
 Add basic lighting.
 
-Build A.I navmesh system, and give A.I actions.
+Steal A.I from Pareilgant.
 
 Reblock as necessary.
 

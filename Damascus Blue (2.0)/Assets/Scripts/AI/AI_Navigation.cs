@@ -23,6 +23,7 @@ public class AI_Navigation : MonoBehaviour
 
     //navigation variables
     public float NavLength;
+    public bool n, ne, e, se, s, sw, w, nw;
     private Ray N, NE, E, SE, S, SW, W, NW;
     private RaycastHit HitN, HitNE, HitE, HitSE, HitS, HitSW, HitW, HitNW;
     private Vector3 PosN, PosNE, PosE, PosSE, PosS, PosSW, PosW, PosNW;
@@ -125,39 +126,40 @@ public class AI_Navigation : MonoBehaviour
         PosSW = transform.position + SW.direction * NavLength;
         PosW = transform.position + W.direction * NavLength;
         PosNW = transform.position + NW.direction * NavLength;
+        
+        //If xPos is closest to player and not false then Mover = xPos
 
-        /*
         if (Physics.Raycast(N, out HitN, NavLength)){    
-            if(Hit.collider.tag != "Player" && Hit.collider.tag != "Enemy"){    }
-        }
+            if(HitN.collider.tag != "Player" && HitN.collider.tag != "Enemy") n = true;
+        } else n = false;
 
         if (Physics.Raycast(NE, out HitNE, NavLength)){    
-            if(Hit.collider.tag != "Player" && Hit.collider.tag != "Enemy"){    }
-        }
+            if(HitNE.collider.tag != "Player" && HitNE.collider.tag != "Enemy") ne = true;
+        } else ne = false;
 
         if (Physics.Raycast(E, out HitE, NavLength)){    
-            if(Hit.collider.tag != "Player" && Hit.collider.tag != "Enemy"){    }
-        }
+            if(HitE.collider.tag != "Player" && HitE.collider.tag != "Enemy") e = true;
+        } else e = false;
 
         if (Physics.Raycast(SE, out HitSE, NavLength)){    
-            if(Hit.collider.tag != "Player" && Hit.collider.tag != "Enemy"){    }
-        }
+            if(HitSE.collider.tag != "Player" && HitSE.collider.tag != "Enemy") se = true;
+        } else se = false;
 
         if (Physics.Raycast(S, out HitS, NavLength)){    
-            if(Hit.collider.tag != "Player" && Hit.collider.tag != "Enemy"){    }
-        }
+            if(HitS.collider.tag != "Player" && HitS.collider.tag != "Enemy") s = true;
+        } s = false;
 
         if (Physics.Raycast(SW, out HitSW, NavLength)){    
-            if(Hit.collider.tag != "Player" && Hit.collider.tag != "Enemy"){    }
-        }
+            if(HitSW.collider.tag != "Player" && HitSW.collider.tag != "Enemy") sw = true;
+        } else sw = false;
 
         if (Physics.Raycast(W, out HitW, NavLength)){    
-            if(Hit.collider.tag != "Player" && Hit.collider.tag != "Enemy"){    }
-        }
+            if(HitW.collider.tag != "Player" && HitW.collider.tag != "Enemy") w = true;
+        } else w = false;
 
         if (Physics.Raycast(NW, out HitNW, NavLength)){    
-            if(Hit.collider.tag != "Player" && Hit.collider.tag != "Enemy"){    }
-        }*/
+            if(HitNW.collider.tag != "Player" && HitNW.collider.tag != "Enemy") nw = true;
+        } else nw = false;
     }
     void Follow(){
         //Change pos to cardinal points

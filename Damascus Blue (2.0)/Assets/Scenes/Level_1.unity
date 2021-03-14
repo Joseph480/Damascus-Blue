@@ -24163,23 +24163,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2993993933483196381, guid: 64dbcb130e72d794d97501b6a3214ecc,
         type: 3}
-      propertyPath: HasPath
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2993993933483196381, guid: 64dbcb130e72d794d97501b6a3214ecc,
-        type: 3}
       propertyPath: Alertness
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2993993933483196381, guid: 64dbcb130e72d794d97501b6a3214ecc,
-        type: 3}
-      propertyPath: NavLength
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2993993933483196381, guid: 64dbcb130e72d794d97501b6a3214ecc,
-        type: 3}
-      propertyPath: SightLength
-      value: 3
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 2993993933483196383, guid: 64dbcb130e72d794d97501b6a3214ecc,
         type: 3}

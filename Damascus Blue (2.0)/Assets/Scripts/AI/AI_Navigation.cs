@@ -98,6 +98,34 @@ public class AI_Navigation : MonoBehaviour
         Gizmos.DrawSphere(PosSW, 0.2f);
         Gizmos.DrawSphere(PosW, 0.2f);
         Gizmos.DrawSphere(PosNW, 0.2f);
+        Gizmos.DrawSphere(Mover, 0.5f);
+    }
+    void ClosestNodeToPlayer(){
+        float x = Vector3.Distance(PosN,Player.transform.position);
+
+        if (!n){ x = Vector3.Distance(PosN,Player.transform.position); Mover = PosN;}
+
+        if (x > Vector3.Distance(PosNE,Player.transform.position) && !ne){ 
+            x = Vector3.Distance(PosNE,Player.transform.position); Mover = PosNE;}
+
+        if (x > Vector3.Distance(PosE,Player.transform.position) && !e){ 
+            x = Vector3.Distance(PosE,Player.transform.position); Mover = PosE;}
+
+        if (x > Vector3.Distance(PosSE,Player.transform.position) && !se){ 
+            x = Vector3.Distance(PosSE,Player.transform.position); Mover = PosSE;}
+
+        if (x > Vector3.Distance(PosS,Player.transform.position) && !s){ 
+            x = Vector3.Distance(PosS,Player.transform.position); Mover = PosS;}
+
+        if (x > Vector3.Distance(PosSW,Player.transform.position) && !sw){ 
+            x = Vector3.Distance(PosSW,Player.transform.position); Mover = PosSW;}
+
+        if (x > Vector3.Distance(PosW,Player.transform.position) && !w){ 
+            x = Vector3.Distance(PosW,Player.transform.position); Mover = PosW;}
+
+        if (x > Vector3.Distance(PosNW,Player.transform.position) && !nw){ 
+            x = Vector3.Distance(PosNW,Player.transform.position); Mover = PosNW;}
+
     }
     void Navigate(){
         N.origin = transform.position;
@@ -126,8 +154,6 @@ public class AI_Navigation : MonoBehaviour
         PosSW = transform.position + SW.direction * NavLength;
         PosW = transform.position + W.direction * NavLength;
         PosNW = transform.position + NW.direction * NavLength;
-        
-        //If xPos is closest to player and not false then Mover = xPos
 
         if (Physics.Raycast(N, out HitN, NavLength)){    
             if(HitN.collider.tag != "Player" && HitN.collider.tag != "Enemy") n = true;
@@ -147,7 +173,7 @@ public class AI_Navigation : MonoBehaviour
 
         if (Physics.Raycast(S, out HitS, NavLength)){    
             if(HitS.collider.tag != "Player" && HitS.collider.tag != "Enemy") s = true;
-        } s = false;
+        } else s = false;
 
         if (Physics.Raycast(SW, out HitSW, NavLength)){    
             if(HitSW.collider.tag != "Player" && HitSW.collider.tag != "Enemy") sw = true;
@@ -160,10 +186,12 @@ public class AI_Navigation : MonoBehaviour
         if (Physics.Raycast(NW, out HitNW, NavLength)){    
             if(HitNW.collider.tag != "Player" && HitNW.collider.tag != "Enemy") nw = true;
         } else nw = false;
+
+        ClosestNodeToPlayer();
     }
     void Follow(){
         //Change pos to cardinal points
-        RB.MovePosition(Vector3.MoveTowards(transform.position, Player.transform.position, MoveSpeed/50));
+        RB.MovePosition(Vector3.MoveTowards(transform.position, Mover, MoveSpeed/50));
         Target = new Vector3 (Player.transform.position.x, transform.position.y, Player.transform.position.z);
         TargetDir = Quaternion.LookRotation(Target - transform.position);
         transform.rotation = Quaternion.Slerp(transform.rotation, TargetDir, LookSpeedChase * Time.deltaTime);

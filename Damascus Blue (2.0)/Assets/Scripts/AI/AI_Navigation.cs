@@ -15,7 +15,7 @@ public class AI_Navigation : MonoBehaviour
     private Vector3 Origin, RayOriginOffset, RayAlertOffset, Target;
     private Quaternion IdelDir, CurrentDir, TargetDir;
     private Player_Control Player;
-    private float PlayerDistance;
+    private float PlayerDistance, DefaultAlert;
     private bool Sighting, EmptyRay, Idel;
     private Rigidbody RB;
     private Ray Vision;
@@ -24,7 +24,7 @@ public class AI_Navigation : MonoBehaviour
     //navigation variables
     public float NavLength;
     public Transform NavOffset;
-    public bool n, ne, e, se, s, sw, w, nw;
+    private bool n, ne, e, se, s, sw, w, nw;
     private Ray N, NE, E, SE, S, SW, W, NW;
     private RaycastHit HitN, HitNE, HitE, HitSE, HitS, HitSW, HitW, HitNW;
     private Vector3 PosN, PosNE, PosE, PosSE, PosS, PosSW, PosW, PosNW;
@@ -35,9 +35,10 @@ public class AI_Navigation : MonoBehaviour
         RB = GetComponent<Rigidbody>();
         Origin = transform.position;
         RayOriginOffset = new Vector3(0,0.5f,0);
+        DefaultAlert = Alertness;
         //Cycles below
         if (!HasPath)InvokeRepeating("NewDirection",IdelPathTime,IdelPathTime);
-        InvokeRepeating("Lingering", IdelPathTime*IdelPathTime,IdelPathTime*IdelPathTime);
+        InvokeRepeating("Lingering", IdelPathTime * 5,IdelPathTime * 5);
         InvokeRepeating("RandomDetect",(float)IdelPathTime/2,(float)IdelPathTime/2);
         InvokeRepeating("Navigate",0.2f,0.2f);
         Idel = true;
@@ -57,22 +58,17 @@ public class AI_Navigation : MonoBehaviour
     }
     void OnTriggerEnter (Collider other){
         switch (other.tag){
-            case "Projectile": Idel = false; break;
+            case "Projectile": Idel = false; Alertness = DefaultAlert * 2; break;
             default: break;
         }
     }
     void Detect(){
         Vision.origin = transform.position + RayOriginOffset;
-        if (Idel) Vision.direction = transform.forward; 
-        else {
-            RayAlertOffset = Player.transform.position - transform.position;
-            RayAlertOffset.x = transform.forward.x; RayAlertOffset.z = transform.forward.z;
-            Vision.direction = transform.forward + RayAlertOffset;
-        }
-        if (Physics.Raycast(Vision, out Hit, SightLength))
+        Vision.direction = transform.forward;
+        if (Physics.Raycast(Vision,out Hit, SightLength))
         {
             if (Hit.collider.tag == "Player"){ 
-                Idel = false; Sighting = true;
+                Idel = false; Sighting = true; Alertness = DefaultAlert * 2;
             }
             if (!Idel && (Hit.collider.tag != "Player" || EmptyRay)){
                 Sighting = false;
@@ -207,7 +203,7 @@ public class AI_Navigation : MonoBehaviour
         IdelDir = CurrentDir * Quaternion.Euler(0,TurnBias(),0);
     }
     void Lingering(){
-        if (!Sighting && !Idel) Idel = true;
+        if (!Sighting && !Idel) Idel = true; Alertness = DefaultAlert;
     }
     void RandomDetect(){
         float i = 0;

@@ -23,6 +23,7 @@ public class AI_Navigation : MonoBehaviour
 
     //navigation variables
     public float NavLength;
+    public Transform NavOffset;
     public bool n, ne, e, se, s, sw, w, nw;
     private Ray N, NE, E, SE, S, SW, W, NW;
     private RaycastHit HitN, HitNE, HitE, HitSE, HitS, HitSW, HitW, HitNW;
@@ -101,9 +102,10 @@ public class AI_Navigation : MonoBehaviour
         Gizmos.DrawSphere(Mover, 0.5f);
     }
     void ClosestNodeToPlayer(){
-        float x = Vector3.Distance(PosN,Player.transform.position);
+        float x = Vector3.Distance(transform.position,Player.transform.position);
 
-        if (!n){ x = Vector3.Distance(PosN,Player.transform.position); Mover = PosN;}
+        if (x > Vector3.Distance(PosN,Player.transform.position) && !n){
+            x = Vector3.Distance(PosN,Player.transform.position);Mover = PosN;}
 
         if (x > Vector3.Distance(PosNE,Player.transform.position) && !ne){ 
             x = Vector3.Distance(PosNE,Player.transform.position); Mover = PosNE;}
@@ -128,64 +130,56 @@ public class AI_Navigation : MonoBehaviour
 
     }
     void Navigate(){
-        N.origin = transform.position;
-        NE.origin = transform.position;
-        E.origin = transform.position;
-        SE.origin = transform.position;
-        S.origin = transform.position;
-        SW.origin = transform.position;
-        W.origin = transform.position;
-        NW.origin = transform.position;
+        N.origin = NavOffset.position;
+        NE.origin = NavOffset.position;
+        E.origin = NavOffset.position;
+        SE.origin = NavOffset.position;
+        S.origin = NavOffset.position;
+        SW.origin = NavOffset.position;
+        W.origin = NavOffset.position;
+        NW.origin = NavOffset.position;
 
-        N.direction = transform.forward;
-        NE.direction = transform.forward + transform.right.normalized;
-        E.direction = transform.right;
-        SE.direction = transform.right + -transform.forward.normalized;
-        S.direction = -transform.forward;
-        SW.direction = -transform.forward + -transform.right.normalized;
-        W.direction = -transform.right;
-        NW.direction = -transform.right + transform.forward.normalized;
+        N.direction = NavOffset.forward;
+        NE.direction = NavOffset.forward + NavOffset.right.normalized;
+        E.direction = NavOffset.right;
+        SE.direction = NavOffset.right + -NavOffset.forward.normalized;
+        S.direction = -NavOffset.forward;
+        SW.direction = -NavOffset.forward + -NavOffset.right.normalized;
+        W.direction = -NavOffset.right;
+        NW.direction = -NavOffset.right + NavOffset.forward.normalized;
 
-        PosN = transform.position + N.direction * NavLength;
-        PosNE = transform.position + NE.direction * NavLength;
-        PosE = transform.position + E.direction * NavLength;
-        PosSE = transform.position + SE.direction * NavLength;
-        PosS = transform.position + S.direction * NavLength;
-        PosSW = transform.position + SW.direction * NavLength;
-        PosW = transform.position + W.direction * NavLength;
-        PosNW = transform.position + NW.direction * NavLength;
+        PosN = NavOffset.position + N.direction * NavLength;
+        PosNE = NavOffset.position + NE.direction * NavLength;
+        PosE = NavOffset.position + E.direction * NavLength;
+        PosSE = NavOffset.position + SE.direction * NavLength;
+        PosS = NavOffset.position + S.direction * NavLength;
+        PosSW = NavOffset.position + SW.direction * NavLength;
+        PosW = NavOffset.position + W.direction * NavLength;
+        PosNW = NavOffset.position + NW.direction * NavLength;
 
         if (Physics.Raycast(N, out HitN, NavLength)){    
-            if(HitN.collider.tag != "Player" && HitN.collider.tag != "Enemy") n = true;
-        } else n = false;
+            if(HitN.collider.tag != "Player") n = true;} else n = false;
 
         if (Physics.Raycast(NE, out HitNE, NavLength)){    
-            if(HitNE.collider.tag != "Player" && HitNE.collider.tag != "Enemy") ne = true;
-        } else ne = false;
+            if(HitNE.collider.tag != "Player") ne = true;} else ne = false;
 
         if (Physics.Raycast(E, out HitE, NavLength)){    
-            if(HitE.collider.tag != "Player" && HitE.collider.tag != "Enemy") e = true;
-        } else e = false;
+            if(HitE.collider.tag != "Player") e = true;} else e = false;
 
         if (Physics.Raycast(SE, out HitSE, NavLength)){    
-            if(HitSE.collider.tag != "Player" && HitSE.collider.tag != "Enemy") se = true;
-        } else se = false;
+            if(HitSE.collider.tag != "Player") se = true;} else se = false;
 
         if (Physics.Raycast(S, out HitS, NavLength)){    
-            if(HitS.collider.tag != "Player" && HitS.collider.tag != "Enemy") s = true;
-        } else s = false;
+            if(HitS.collider.tag != "Player") s = true;} else s = false;
 
         if (Physics.Raycast(SW, out HitSW, NavLength)){    
-            if(HitSW.collider.tag != "Player" && HitSW.collider.tag != "Enemy") sw = true;
-        } else sw = false;
+            if(HitSW.collider.tag != "Player") sw = true;} else sw = false;
 
         if (Physics.Raycast(W, out HitW, NavLength)){    
-            if(HitW.collider.tag != "Player" && HitW.collider.tag != "Enemy") w = true;
-        } else w = false;
+            if(HitW.collider.tag != "Player") w = true;} else w = false;
 
         if (Physics.Raycast(NW, out HitNW, NavLength)){    
-            if(HitNW.collider.tag != "Player" && HitNW.collider.tag != "Enemy") nw = true;
-        } else nw = false;
+            if(HitNW.collider.tag != "Player") nw = true;} else nw = false;
 
         ClosestNodeToPlayer();
     }
@@ -222,3 +216,11 @@ public class AI_Navigation : MonoBehaviour
         if (i < 0.3f) Idel = false;
     }
 }
+
+/*
+
+        Make functions that change nav length and nav height depending on situation.
+        OR: cast new rays from tips of original 8.
+        Have Pos variables be located also hit points, so that you might be able to send more rays from those locations.
+
+*/

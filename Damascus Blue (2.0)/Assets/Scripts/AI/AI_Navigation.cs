@@ -5,7 +5,8 @@ using UnityEngine.AI;
 
 public class AI_Navigation : MonoBehaviour
 {
-    public float MoveSpeed, LookSpeedChase, LookSpeedIdel, IdelPathTime, SightLength, Alertness;
+    public float MoveSpeed, LookSpeedChase, LookSpeedIdel, IdelPathTime, HuntTime, SightLength;
+    public float Alertness;
     public bool HasPath;
 
     //Create points for path. Draw line during editor time from [i] to [i++] foreach();
@@ -43,10 +44,9 @@ public class AI_Navigation : MonoBehaviour
         DefaultAlert = Alertness;
         //Cycles below
         if (!HasPath)InvokeRepeating("NewDirection",IdelPathTime,IdelPathTime);
-        InvokeRepeating("Lingering", IdelPathTime * 5,IdelPathTime * 5);
-        InvokeRepeating("RandomDetect",(float)IdelPathTime/2,(float)IdelPathTime/2);
+        InvokeRepeating("Lingering", HuntTime, HuntTime);
+        InvokeRepeating("NearDetect",(float)IdelPathTime/2,(float)IdelPathTime/2);
         InvokeRepeating("Navigate",0.2f,0.2f);
-        PlayerGhost = Player.transform.position;
         Idel = true;
     }
     void Update(){
@@ -143,14 +143,14 @@ public class AI_Navigation : MonoBehaviour
     }
     void NetForPlayer(){
         
-        Net[0].origin = (PosN - transform.position) * (NavLength + NavRadius);
-        Net[1].origin = (PosNE - transform.position) * (NavLength + NavRadius);
-        Net[2].origin = (PosE - transform.position) * (NavLength + NavRadius);
-        Net[3].origin = (PosSE - transform.position) * (NavLength + NavRadius);
-        Net[4].origin = (PosS - transform.position) * (NavLength + NavRadius);
-        Net[5].origin = (PosSW - transform.position) * (NavLength + NavRadius);
-        Net[6].origin = (PosW - transform.position) * (NavLength + NavRadius);
-        Net[7].origin = (PosNW - transform.position) * (NavLength + NavRadius);
+        Net[0].origin = PosN + (PosN - transform.position).normalized * NavRadius;
+        Net[1].origin = PosNE + (PosNE - transform.position).normalized * NavRadius;
+        Net[2].origin = PosE + (PosE - transform.position).normalized * NavRadius;
+        Net[3].origin = PosSE + (PosSE - transform.position).normalized * NavRadius;
+        Net[4].origin = PosS + (PosS - transform.position).normalized * NavRadius;
+        Net[5].origin = PosSW + (PosSW - transform.position).normalized * NavRadius;
+        Net[6].origin = PosW + (PosW - transform.position).normalized * NavRadius;
+        Net[7].origin = PosNW + (PosNW - transform.position).normalized * NavRadius;
 
         Net[0].direction = (Player.transform.position - PosN).normalized;
         Net[1].direction = (Player.transform.position - PosNE).normalized;
@@ -188,7 +188,7 @@ public class AI_Navigation : MonoBehaviour
     }
     void CheckIfGhostReached(){
         var x = Vector3.Distance(transform.position, Player.transform.position);
-        if (x <= 0.75f) PlayerGhost = Player.transform.position;
+        if (x <= 0.5f) PlayerGhost = Player.transform.position;
     }
     void Navigate(){
         N.origin = NavOffset.position;
@@ -268,20 +268,13 @@ public class AI_Navigation : MonoBehaviour
         IdelDir = CurrentDir * Quaternion.Euler(0,TurnBias(),0);
     }
     void Lingering(){
-        if (!Sighting && !Idel) Idel = true; Alertness = DefaultAlert;
+        if (!Sighting && !Idel){ 
+            Idel = true; Alertness = DefaultAlert;
+        }
     }
-    void RandomDetect(){
-        float i = 0;
+    void NearDetect(){
         PlayerDistance = Vector3.Distance(Player.transform.position, transform.position);
-        i = Random.Range(0f, (float)PlayerDistance/Alertness); 
-        if (i < 0.3f) Idel = false;
+        float i = PlayerDistance/Alertness; float x = Random.Range(0, Alertness * 0.01f);
+        if (i < x) Idel = false;
     }
 }
-
-/*
-
-        Make functions that change nav length and nav height depending on situation.
-        OR: cast new rays from tips of original 8.
-        Have Pos variables be located also hit points, so that you might be able to send more rays from those locations.
-
-*/

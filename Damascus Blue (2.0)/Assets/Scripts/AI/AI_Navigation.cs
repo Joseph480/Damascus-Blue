@@ -21,15 +21,17 @@ public class AI_Navigation : MonoBehaviour
     private Ray Vision;
     private RaycastHit Hit; 
 
-    public float NavLength;
+    public float NavLength, NavRadius;
     public Transform NavOffset;
     private bool n, ne, e, se, s, sw, w, nw;
     private Ray N, NE, E, SE, S, SW, W, NW;
     private RaycastHit HitN, HitNE, HitE, HitSE, HitS, HitSW, HitW, HitNW;
     private Vector3 PosN, PosNE, PosE, PosSE, PosS, PosSW, PosW, PosNW;
-    private Vector3 Mover;
+    private Vector3 Mover, PlayerGhost;
+
+
     //Net casting off Cardinal rays.
-    private float NetReach;
+    public float NetReach;
     private Ray[] Net = new Ray[8];
     private Vector3[] NetNodes;
 
@@ -44,6 +46,7 @@ public class AI_Navigation : MonoBehaviour
         InvokeRepeating("Lingering", IdelPathTime * 5,IdelPathTime * 5);
         InvokeRepeating("RandomDetect",(float)IdelPathTime/2,(float)IdelPathTime/2);
         InvokeRepeating("Navigate",0.2f,0.2f);
+        PlayerGhost = Player.transform.position;
         Idel = true;
     }
     void Update(){
@@ -108,55 +111,84 @@ public class AI_Navigation : MonoBehaviour
         Gizmos.DrawSphere(PosW, 0.2f);
         Gizmos.DrawSphere(PosNW, 0.2f);
         Gizmos.DrawSphere(Mover, 0.5f);
+        Gizmos.DrawSphere(PlayerGhost, 0.75f);
     }
     void ClosestNodeToPlayer(){
-        float x = Vector3.Distance(transform.position,Player.transform.position);
-
-        if (x > Vector3.Distance(PosN,Player.transform.position) && !n){
-            x = Vector3.Distance(PosN,Player.transform.position); Mover = PosN;}
-
-        if (x > Vector3.Distance(PosNE,Player.transform.position) && !ne){ 
-            x = Vector3.Distance(PosNE,Player.transform.position); Mover = PosNE;}
-
-        if (x > Vector3.Distance(PosE,Player.transform.position) && !e){ 
-            x = Vector3.Distance(PosE,Player.transform.position); Mover = PosE;}
-
-        if (x > Vector3.Distance(PosSE,Player.transform.position) && !se){ 
-            x = Vector3.Distance(PosSE,Player.transform.position); Mover = PosSE;}
-
-        if (x > Vector3.Distance(PosS,Player.transform.position) && !s){ 
-            x = Vector3.Distance(PosS,Player.transform.position); Mover = PosS;}
-
-        if (x > Vector3.Distance(PosSW,Player.transform.position) && !sw){ 
-            x = Vector3.Distance(PosSW,Player.transform.position); Mover = PosSW;}
-
-        if (x > Vector3.Distance(PosW,Player.transform.position) && !w){ 
-            x = Vector3.Distance(PosW,Player.transform.position); Mover = PosW;}
-
-        if (x > Vector3.Distance(PosNW,Player.transform.position) && !nw){ 
-            x = Vector3.Distance(PosNW,Player.transform.position); Mover = PosNW;}
-
         NetForPlayer();
+        float x = Vector3.Distance(transform.position,PlayerGhost) + 1;
 
+        if (x > Vector3.Distance(PosN,PlayerGhost) && !n){
+            x = Vector3.Distance(PosN,PlayerGhost); Mover = PosN;}
+
+        if (x > Vector3.Distance(PosNE,PlayerGhost) && !ne){ 
+            x = Vector3.Distance(PosNE,PlayerGhost); Mover = PosNE;}
+
+        if (x > Vector3.Distance(PosE,PlayerGhost) && !e){ 
+            x = Vector3.Distance(PosE,PlayerGhost); Mover = PosE;}
+
+        if (x > Vector3.Distance(PosSE,PlayerGhost) && !se){ 
+            x = Vector3.Distance(PosSE,PlayerGhost); Mover = PosSE;}
+
+        if (x > Vector3.Distance(PosS,PlayerGhost) && !s){ 
+            x = Vector3.Distance(PosS,PlayerGhost); Mover = PosS;}
+
+        if (x > Vector3.Distance(PosSW,PlayerGhost) && !sw){ 
+            x = Vector3.Distance(PosSW,PlayerGhost); Mover = PosSW;}
+
+        if (x > Vector3.Distance(PosW,PlayerGhost) && !w){ 
+            x = Vector3.Distance(PosW,PlayerGhost); Mover = PosW;}
+
+        if (x > Vector3.Distance(PosNW,PlayerGhost) && !nw){ 
+            x = Vector3.Distance(PosNW,PlayerGhost); Mover = PosNW;}
     }
     void NetForPlayer(){
-        Net[0].origin = PosN;
-        Net[1].origin = PosNE;
-        Net[2].origin = PosE;
-        Net[3].origin = PosSE;
-        Net[4].origin = PosS;
-        Net[5].origin = PosSW;
-        Net[6].origin = PosW;
-        Net[7].origin = PosNW;
+        
+        Net[0].origin = (PosN - transform.position) * (NavLength + NavRadius);
+        Net[1].origin = (PosNE - transform.position) * (NavLength + NavRadius);
+        Net[2].origin = (PosE - transform.position) * (NavLength + NavRadius);
+        Net[3].origin = (PosSE - transform.position) * (NavLength + NavRadius);
+        Net[4].origin = (PosS - transform.position) * (NavLength + NavRadius);
+        Net[5].origin = (PosSW - transform.position) * (NavLength + NavRadius);
+        Net[6].origin = (PosW - transform.position) * (NavLength + NavRadius);
+        Net[7].origin = (PosNW - transform.position) * (NavLength + NavRadius);
 
-        Net[0].direction = N.direction;
-        Net[1].direction = NE.direction;
-        Net[2].direction = E.direction;
-        Net[3].direction = SE.direction;
-        Net[4].direction = S.direction;
-        Net[5].direction = SW.direction;
-        Net[6].direction = W.direction;
-        Net[7].direction = NW.direction;
+        Net[0].direction = (Player.transform.position - PosN).normalized;
+        Net[1].direction = (Player.transform.position - PosNE).normalized;
+        Net[2].direction = (Player.transform.position - PosE).normalized;
+        Net[3].direction = (Player.transform.position - PosSE).normalized;
+        Net[4].direction = (Player.transform.position - PosS).normalized;
+        Net[5].direction = (Player.transform.position - PosSW).normalized;
+        Net[6].direction = (Player.transform.position - PosW).normalized;
+        Net[7].direction = (Player.transform.position - PosNW).normalized;
+
+        if (Physics.Raycast(Net[0], out HitN, NetReach) && !n){ 
+            if (HitN.transform.tag == "Player") PlayerGhost = HitN.point;
+        }
+        if (Physics.Raycast(Net[1], out HitN, NetReach) && !ne){
+            if (HitN.transform.tag == "Player") PlayerGhost = HitN.point;
+        }
+        if (Physics.Raycast(Net[2], out HitN, NetReach) && !e){
+            if (HitN.transform.tag == "Player") PlayerGhost = HitN.point;
+        }
+        if (Physics.Raycast(Net[3], out HitN, NetReach) && !se){
+            if (HitN.transform.tag == "Player") PlayerGhost = HitN.point;
+        }
+        if (Physics.Raycast(Net[4], out HitN, NetReach) && !s){
+            if (HitN.transform.tag == "Player") PlayerGhost = HitN.point;
+        }
+        if (Physics.Raycast(Net[5], out HitN, NetReach) && !sw){
+            if (HitN.transform.tag == "Player") PlayerGhost = HitN.point;
+        }
+        if (Physics.Raycast(Net[6], out HitN, NetReach) && !w){
+            if (HitN.transform.tag == "Player") PlayerGhost = HitN.point;
+        }
+        if (Physics.Raycast(Net[7], out HitN, NetReach) && !nw){
+            if (HitN.transform.tag == "Player") PlayerGhost = HitN.point;
+        }
+    }
+    void CheckIfGhostReached(){
+        var x = Vector3.Distance(transform.position, Player.transform.position);
+        if (x <= 0.75f) PlayerGhost = Player.transform.position;
     }
     void Navigate(){
         N.origin = NavOffset.position;
@@ -213,7 +245,7 @@ public class AI_Navigation : MonoBehaviour
         ClosestNodeToPlayer();
     }
     void Follow(){
-        //Change pos to cardinal points
+        CheckIfGhostReached();
         RB.MovePosition(Vector3.MoveTowards(transform.position, Mover, MoveSpeed/50));
         Target = new Vector3 (Player.transform.position.x, transform.position.y, Player.transform.position.z);
         TargetDir = Quaternion.LookRotation(Target - transform.position);

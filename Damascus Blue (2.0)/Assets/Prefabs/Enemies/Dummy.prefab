@@ -97,10 +97,12 @@ MonoBehaviour:
   LookSpeedIdel: 15
   IdelPathTime: 2
   SightLength: 10
-  Alertness: 45
+  Alertness: 8
   HasPath: 0
-  NavLength: 3
+  NavLength: 2
+  NavRadius: 5
   NavOffset: {fileID: 877406172044944343}
+  NetReach: 25
 --- !u!1 &2993993933631951230
 GameObject:
   m_ObjectHideFlags: 0

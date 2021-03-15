@@ -21,7 +21,6 @@ public class AI_Navigation : MonoBehaviour
     private Ray Vision;
     private RaycastHit Hit; 
 
-    //navigation variables
     public float NavLength;
     public Transform NavOffset;
     private bool n, ne, e, se, s, sw, w, nw;
@@ -29,6 +28,10 @@ public class AI_Navigation : MonoBehaviour
     private RaycastHit HitN, HitNE, HitE, HitSE, HitS, HitSW, HitW, HitNW;
     private Vector3 PosN, PosNE, PosE, PosSE, PosS, PosSW, PosW, PosNW;
     private Vector3 Mover;
+    //Net casting off Cardinal rays.
+    private float NetReach;
+    private Ray[] Net = new Ray[8];
+    private Vector3[] NetNodes;
 
     void Start(){
         Player = FindObjectOfType<Player_Control>();
@@ -85,6 +88,15 @@ public class AI_Navigation : MonoBehaviour
         Debug.DrawRay(SW.origin,SW.direction * NavLength,Color.blue);
         Debug.DrawRay(W.origin,W.direction * NavLength,Color.red);
         Debug.DrawRay(NW.origin,NW.direction * NavLength,Color.blue);
+
+        Debug.DrawRay(Net[0].origin,Net[0].direction * NetReach, Color.green);
+        Debug.DrawRay(Net[1].origin,Net[1].direction * NetReach, Color.green);
+        Debug.DrawRay(Net[2].origin,Net[2].direction * NetReach, Color.green);
+        Debug.DrawRay(Net[3].origin,Net[3].direction * NetReach, Color.green);
+        Debug.DrawRay(Net[4].origin,Net[4].direction * NetReach, Color.green);
+        Debug.DrawRay(Net[5].origin,Net[5].direction * NetReach, Color.green);
+        Debug.DrawRay(Net[6].origin,Net[6].direction * NetReach, Color.green);
+        Debug.DrawRay(Net[7].origin,Net[7].direction * NetReach, Color.green);
     }
     void OnDrawGizmos(){
         Gizmos.DrawSphere(PosN, 0.2f);
@@ -101,7 +113,7 @@ public class AI_Navigation : MonoBehaviour
         float x = Vector3.Distance(transform.position,Player.transform.position);
 
         if (x > Vector3.Distance(PosN,Player.transform.position) && !n){
-            x = Vector3.Distance(PosN,Player.transform.position);Mover = PosN;}
+            x = Vector3.Distance(PosN,Player.transform.position); Mover = PosN;}
 
         if (x > Vector3.Distance(PosNE,Player.transform.position) && !ne){ 
             x = Vector3.Distance(PosNE,Player.transform.position); Mover = PosNE;}
@@ -124,6 +136,27 @@ public class AI_Navigation : MonoBehaviour
         if (x > Vector3.Distance(PosNW,Player.transform.position) && !nw){ 
             x = Vector3.Distance(PosNW,Player.transform.position); Mover = PosNW;}
 
+        NetForPlayer();
+
+    }
+    void NetForPlayer(){
+        Net[0].origin = PosN;
+        Net[1].origin = PosNE;
+        Net[2].origin = PosE;
+        Net[3].origin = PosSE;
+        Net[4].origin = PosS;
+        Net[5].origin = PosSW;
+        Net[6].origin = PosW;
+        Net[7].origin = PosNW;
+
+        Net[0].direction = N.direction;
+        Net[1].direction = NE.direction;
+        Net[2].direction = E.direction;
+        Net[3].direction = SE.direction;
+        Net[4].direction = S.direction;
+        Net[5].direction = SW.direction;
+        Net[6].direction = W.direction;
+        Net[7].direction = NW.direction;
     }
     void Navigate(){
         N.origin = NavOffset.position;

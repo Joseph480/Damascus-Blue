@@ -29,12 +29,8 @@ public class AI_Navigation : MonoBehaviour
     private RaycastHit HitN, HitNE, HitE, HitSE, HitS, HitSW, HitW, HitNW;
     private Vector3 PosN, PosNE, PosE, PosSE, PosS, PosSW, PosW, PosNW;
     private Vector3 Mover, PlayerGhost;
-
-
-    //Net casting off Cardinal rays.
-    public float NetReach;
-    private Ray[] Net = new Ray[8];
-    private Vector3[] NetNodes;
+    private Ray ImpliedVision;
+    private RaycastHit ImpliedHit;
 
     void Start(){
         Player = FindObjectOfType<Player_Control>();
@@ -44,7 +40,6 @@ public class AI_Navigation : MonoBehaviour
         DefaultAlert = Alertness;
         //Cycles below
         if (!HasPath)InvokeRepeating("NewDirection",IdelPathTime,IdelPathTime);
-        InvokeRepeating("Lingering", HuntTime, HuntTime);
         InvokeRepeating("NearDetect",(float)IdelPathTime/2,(float)IdelPathTime/2);
         InvokeRepeating("Navigate",0.2f,0.2f);
         Idel = true;
@@ -70,11 +65,14 @@ public class AI_Navigation : MonoBehaviour
     }
     void Detect(){
         Vision.origin = transform.position + RayOriginOffset;
-        Vision.direction = transform.forward;
+        if (!Sighting) Vision.direction = transform.forward;
+        if (Sighting) Vision.direction = PlayerGhost - transform.position;
         if (Physics.Raycast(Vision,out Hit, SightLength))
         {
             if (Hit.collider.tag == "Player"){ 
                 Idel = false; Sighting = true; Alertness = DefaultAlert * 2;
+                Invoke("Lingering", HuntTime);
+                PlayerGhost = Player.transform.position;
             }
             if (!Idel && (Hit.collider.tag != "Player" || EmptyRay)){
                 Sighting = false;
@@ -91,15 +89,7 @@ public class AI_Navigation : MonoBehaviour
         Debug.DrawRay(SW.origin,SW.direction * NavLength,Color.blue);
         Debug.DrawRay(W.origin,W.direction * NavLength,Color.red);
         Debug.DrawRay(NW.origin,NW.direction * NavLength,Color.blue);
-
-        Debug.DrawRay(Net[0].origin,Net[0].direction * NetReach, Color.green);
-        Debug.DrawRay(Net[1].origin,Net[1].direction * NetReach, Color.green);
-        Debug.DrawRay(Net[2].origin,Net[2].direction * NetReach, Color.green);
-        Debug.DrawRay(Net[3].origin,Net[3].direction * NetReach, Color.green);
-        Debug.DrawRay(Net[4].origin,Net[4].direction * NetReach, Color.green);
-        Debug.DrawRay(Net[5].origin,Net[5].direction * NetReach, Color.green);
-        Debug.DrawRay(Net[6].origin,Net[6].direction * NetReach, Color.green);
-        Debug.DrawRay(Net[7].origin,Net[7].direction * NetReach, Color.green);
+        Debug.DrawRay(Vision.origin, Vision.direction * SightLength, Color.yellow);
     }
     void OnDrawGizmos(){
         Gizmos.DrawSphere(PosN, 0.2f);
@@ -114,7 +104,6 @@ public class AI_Navigation : MonoBehaviour
         Gizmos.DrawSphere(PlayerGhost, 0.75f);
     }
     void ClosestNodeToPlayer(){
-        NetForPlayer();
         float x = Vector3.Distance(transform.position,PlayerGhost) + 1;
 
         if (x > Vector3.Distance(PosN,PlayerGhost) && !n){
@@ -141,54 +130,13 @@ public class AI_Navigation : MonoBehaviour
         if (x > Vector3.Distance(PosNW,PlayerGhost) && !nw){ 
             x = Vector3.Distance(PosNW,PlayerGhost); Mover = PosNW;}
     }
-    void NetForPlayer(){
-        
-        Net[0].origin = PosN + (PosN - transform.position).normalized * NavRadius;
-        Net[1].origin = PosNE + (PosNE - transform.position).normalized * NavRadius;
-        Net[2].origin = PosE + (PosE - transform.position).normalized * NavRadius;
-        Net[3].origin = PosSE + (PosSE - transform.position).normalized * NavRadius;
-        Net[4].origin = PosS + (PosS - transform.position).normalized * NavRadius;
-        Net[5].origin = PosSW + (PosSW - transform.position).normalized * NavRadius;
-        Net[6].origin = PosW + (PosW - transform.position).normalized * NavRadius;
-        Net[7].origin = PosNW + (PosNW - transform.position).normalized * NavRadius;
-
-        Net[0].direction = (Player.transform.position - PosN).normalized;
-        Net[1].direction = (Player.transform.position - PosNE).normalized;
-        Net[2].direction = (Player.transform.position - PosE).normalized;
-        Net[3].direction = (Player.transform.position - PosSE).normalized;
-        Net[4].direction = (Player.transform.position - PosS).normalized;
-        Net[5].direction = (Player.transform.position - PosSW).normalized;
-        Net[6].direction = (Player.transform.position - PosW).normalized;
-        Net[7].direction = (Player.transform.position - PosNW).normalized;
-
-        if (Physics.Raycast(Net[0], out HitN, NetReach) && !n){ 
-            if (HitN.transform.tag == "Player") PlayerGhost = HitN.point;
-        }
-        if (Physics.Raycast(Net[1], out HitN, NetReach) && !ne){
-            if (HitN.transform.tag == "Player") PlayerGhost = HitN.point;
-        }
-        if (Physics.Raycast(Net[2], out HitN, NetReach) && !e){
-            if (HitN.transform.tag == "Player") PlayerGhost = HitN.point;
-        }
-        if (Physics.Raycast(Net[3], out HitN, NetReach) && !se){
-            if (HitN.transform.tag == "Player") PlayerGhost = HitN.point;
-        }
-        if (Physics.Raycast(Net[4], out HitN, NetReach) && !s){
-            if (HitN.transform.tag == "Player") PlayerGhost = HitN.point;
-        }
-        if (Physics.Raycast(Net[5], out HitN, NetReach) && !sw){
-            if (HitN.transform.tag == "Player") PlayerGhost = HitN.point;
-        }
-        if (Physics.Raycast(Net[6], out HitN, NetReach) && !w){
-            if (HitN.transform.tag == "Player") PlayerGhost = HitN.point;
-        }
-        if (Physics.Raycast(Net[7], out HitN, NetReach) && !nw){
-            if (HitN.transform.tag == "Player") PlayerGhost = HitN.point;
-        }
-    }
     void CheckIfGhostReached(){
-        var x = Vector3.Distance(transform.position, Player.transform.position);
-        if (x <= 0.5f) PlayerGhost = Player.transform.position;
+        var x = Vector3.Distance(transform.position, PlayerGhost);
+        ImpliedVision.origin = PlayerGhost;
+        ImpliedVision.direction = Player.transform.position - PlayerGhost;
+        if (Physics.Raycast(ImpliedVision, out ImpliedHit, SightLength) && x <= 0.5f){
+            if (ImpliedHit.transform.tag == "Player") PlayerGhost = ImpliedHit.point;
+        }
     }
     void Navigate(){
         N.origin = NavOffset.position;
@@ -200,14 +148,17 @@ public class AI_Navigation : MonoBehaviour
         W.origin = NavOffset.position;
         NW.origin = NavOffset.position;
 
-        N.direction = NavOffset.forward;
-        NE.direction = NavOffset.forward + NavOffset.right.normalized;
-        E.direction = NavOffset.right;
-        SE.direction = NavOffset.right + -NavOffset.forward.normalized;
-        S.direction = -NavOffset.forward;
-        SW.direction = -NavOffset.forward + -NavOffset.right.normalized;
-        W.direction = -NavOffset.right;
-        NW.direction = -NavOffset.right + NavOffset.forward.normalized;
+        //I think it works better using vecto3 then transform. But the problem is the rays no longer
+        //rotate with a.i, so it's easy for the a.i to have non-dynamic casting, leading to getting stuck on edges,
+        //and will probably get stuck looking through peepholes. Therefore, rays need to be dynamic.
+        N.direction = Vector3.forward;
+        NE.direction = Vector3.forward + Vector3.right.normalized;
+        E.direction = Vector3.right;
+        SE.direction = Vector3.right + -Vector3.forward.normalized;
+        S.direction = -Vector3.forward;
+        SW.direction = -Vector3.forward + -Vector3.right.normalized;
+        W.direction = -Vector3.right;
+        NW.direction = -Vector3.right + Vector3.forward.normalized;
 
         PosN = NavOffset.position + N.direction * NavLength;
         PosNE = NavOffset.position + NE.direction * NavLength;
@@ -241,12 +192,12 @@ public class AI_Navigation : MonoBehaviour
 
         if (Physics.Raycast(NW, out HitNW, NavLength)){    
             if(HitNW.collider.tag != "Player") nw = true;} else nw = false;
-
         ClosestNodeToPlayer();
     }
     void Follow(){
         CheckIfGhostReached();
-        RB.MovePosition(Vector3.MoveTowards(transform.position, Mover, MoveSpeed/50));
+        if (!Sighting)RB.MovePosition(Vector3.MoveTowards(transform.position, Mover, MoveSpeed/50));
+        else RB.MovePosition(Vector3.MoveTowards(transform.position, Player.transform.position, MoveSpeed/50));
         Target = new Vector3 (Player.transform.position.x, transform.position.y, Player.transform.position.z);
         TargetDir = Quaternion.LookRotation(Target - transform.position);
         transform.rotation = Quaternion.Slerp(transform.rotation, TargetDir, LookSpeedChase * Time.deltaTime);
@@ -267,14 +218,36 @@ public class AI_Navigation : MonoBehaviour
         CurrentDir = transform.rotation;
         IdelDir = CurrentDir * Quaternion.Euler(0,TurnBias(),0);
     }
+    //This one actually does need to be an ienumerator so that it can be started and cancled accordingly.
+    //We want to use this for handling object permanence when finding the player. Like, if the player
+    //goes around a corner, then if the timer is still high enough, we can send the player's position
+    //to the PlayerGhost variable. But if not, then we use implied vision.
     void Lingering(){
         if (!Sighting && !Idel){ 
             Idel = true; Alertness = DefaultAlert;
-        }
+        } else Invoke("Lingering", HuntTime);
     }
     void NearDetect(){
+        if (!Idel) return;
         PlayerDistance = Vector3.Distance(Player.transform.position, transform.position);
         float i = PlayerDistance/Alertness; float x = Random.Range(0, Alertness * 0.01f);
-        if (i < x) Idel = false;
+        if (i < x){Idel = false; PlayerGhost = Player.transform.position;}
     }
 }
+
+/*
+            THINGS LEFT TO DO:
+            Fix problem where A.I doesn't know what to do after getting to playerghost.
+            Fix going back and forth when two nodes are closest to player.
+            Fix A.I walking off edges that are too deep. (probably have rays shoot down from nodes)
+            Fix walking into edges of objects.
+            Add HasPath functionality.
+            Add jumping over small obstacles functionality.
+
+            After that, start giving A.I guns, and then control their distance to player.
+            Enemies should only get so close before firing. If they can't see the player, they don't shoot.
+            If they can see the player, and they are close enough, only shoot so often.
+            If the player is above them (at a certain height), don't bother getting close, just shoot.
+
+            Maybe only run Near Detect when player is visible to a.i
+*/

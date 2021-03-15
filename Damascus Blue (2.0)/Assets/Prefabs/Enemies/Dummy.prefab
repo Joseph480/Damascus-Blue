@@ -93,18 +93,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab02cd49391600b41baa06f3217de869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 4.5
+  MoveSpeed: 3
   LookSpeedChase: 30
   LookSpeedIdel: 15
   IdelPathTime: 2
-  HuntTime: 10
-  SightLength: 10
+  HuntTime: 45
+  SightLength: 35
   Alertness: 100
   HasPath: 0
   NavLength: 2
-  NavRadius: 1
+  NavRadius: 0
   NavOffset: {fileID: 877406172044944343}
-  NetReach: 25
 --- !u!1 &2993993933631951230
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,7 +273,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7036490783165333183}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.211, y: 0.378, z: 0.42}
+  m_LocalPosition: {x: 0.211, y: 0.269, z: 0.42}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2993993933483196383}
